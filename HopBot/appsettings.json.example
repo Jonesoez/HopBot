@@ -1,0 +1,18 @@
+﻿{
+  "DiscordToken": "xxxxxxxxxxxxxxx",
+  "DiscordCommandPrefix": "!",
+  "DiscordLogChannel": 922191194606411847,
+  "DiscordRequestChannel": 753218416936091689,
+  "DiscordPingEmote": "<:pingjit:921183039336382464>",
+  "DownloadPath": "tmp_maps",
+  "ExtractPath": [
+    "extracted_maps",
+    "extracted_maps2"
+  ],
+  "MapListFile": [
+    "mapcycle1.txt",
+    "mapcycle2.txt"
+  ],
+  "FastDlPath": "fastdl",
+  "MapDownloaderRole": "Map Downloader"
+}

@@ -136,8 +136,13 @@ namespace HopBot.Commands
                         return;
                     }
 
-                    await downloadMessageGb.ModifyAsync(msg => msg.Content = $"```Decompressing completed. Now compressing to Fastdl...```");
-                    fileService.CompressToFastdl(_mapFileBsp);
+                    await downloadMessageGb.ModifyAsync(msg => msg.Content = $"```Decompressing completed...```");
+
+                    if(_config.GetValue<bool>("EnableFastDl"))
+                    {
+                        await downloadMessageGb.ModifyAsync(msg => msg.Content = $"```Now compressing to Fastdl...```");
+                        fileService.CompressToFastdl(_mapFileBsp);
+                    }
 
                     await ModifyDelete(downloadMessageGb, "Request completed successfully.", 5);
                     await EmbedMessageReact(embedMessageGb);

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Linq;
 using System.Net;
+using SevenZipExtractor;
 
 namespace HopBot.MapService
 {
@@ -201,6 +202,7 @@ namespace HopBot.MapService
             {
                 using Stream stream = File.OpenRead(Path.Combine(_config.GetValue<string>("DownloadPath"), compressedFile));
 
+                // bz2 method/acer method
                 if(acerMethod)
                 {
                     if (Path.GetExtension(compressedFile) == ".bz2")
@@ -222,6 +224,35 @@ namespace HopBot.MapService
                     return;
                 }
 
+                // 7z method
+                if(Path.GetExtension(compressedFile) == ".7z")
+                {
+                    using (ArchiveFile archiveFile = new ArchiveFile(stream))
+                    {
+                        foreach (SevenZipExtractor.Entry entry in archiveFile.Entries)
+                        {
+                            if (Path.GetExtension(entry.FileName) == ".bsp")
+                            {
+                                entry.Extract(Path.Combine(_config.GetSection("ExtractPath:0").Value, entry.FileName));
+                                fileName = entry.FileName;
+                            }
+                        }
+                    }
+                    stream.Close();
+                    File.Delete(Path.Combine(_config.GetValue<string>("DownloadPath"), compressedFile));
+
+                    if (String.IsNullOrEmpty(fileName))
+                        return;
+
+                    foreach (var mapfolder in mapfolders.Skip(1))
+                    {
+                        if (!File.Exists(Path.Combine(mapfolder.Value, fileName)))
+                            File.Copy(Path.Combine(_config.GetSection("ExtractPath:0").Value, fileName), Path.Combine(mapfolder.Value, fileName));
+                    }
+                    return;
+                }
+
+                // every other compression type
                 using var reader = ReaderFactory.Open(stream);
                 while (reader.MoveToNextEntry())
                 {

@@ -31,6 +31,7 @@ Steps marked with a `(*)` are needed to run the bot.
     "\/var\/lib\/pterodactyl\/volumes\/server1\/cstrike\/cfg\/mapcycle.txt",
     "\/var\/lib\/pterodactyl\/volumes\/server2\/cstrike\/cfg\/mapcycle.txt"
   ],
+  "EnableFastDl": false,
   "FastDlPath": "\/var\/lib\/pterodactyl\/volumes\/web\/www\/fastdl\/maps",
   "MapDownloaderRole": "Map Downloader"
 }

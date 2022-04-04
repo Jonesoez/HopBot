@@ -13,6 +13,7 @@
     "mapcycle1.txt",
     "mapcycle2.txt"
   ],
+  "EnableFastDl":  false,
   "FastDlPath": "fastdl",
   "MapDownloaderRole": "Map Downloader"
 }

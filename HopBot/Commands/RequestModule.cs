@@ -84,8 +84,8 @@ namespace HopBot.Commands
                         return;
                     }
 
-                    // 5568 is Gamebananas CS:S BHOP category, fuck you Gamebanana
-                    if(gb._aCategory._idRow != 5568)
+                    // 5568 is Gamebananas CS:S BHOP category, 5422 is CS:GO
+                    if(gb._aCategory._idRow != 5422)
                     {
                         await SendChannelMessageDelete("This map does not exist for CS:S. Are you sure you are requesting a CS:S bhop map?", 10);
                         return;

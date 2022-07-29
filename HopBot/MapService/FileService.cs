@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SharpCompress.Readers;
 using System;
@@ -286,7 +286,39 @@ namespace HopBot.MapService
                 _log.LogError(e.Message);
             }
         }
+        
+	//New Function :v
+	    public void CopyToFastdl(string filename)
+        {
+            var _mapbsp = Path.Combine(_config.GetValue<string>("ExtractPath:0"), filename);
+            var _tobz2 = Path.Combine(_config.GetValue<string>("FastDlPath"), filename + ".bz2");
+            var _tobsp = Path.Combine(_config.GetValue<string>("FastDlPath"), filename);
 
+            if (!File.Exists(_mapbsp))
+                return;
+
+            if (File.Exists(_tobz2))
+            {
+                _log.LogInformation("Map already compressed and existing in {FastDlFolder}", _config.GetValue<string>("FastDlPath"));
+                return;
+            }
+			
+            if (File.Exists(_tobsp))
+            {
+                _log.LogInformation("Map already exists in {FastDlFolder}", _config.GetValue<string>("FastDlPath"));
+                return;
+            }
+		
+            try
+            {
+		        File.Copy(_mapbsp, _tobsp, true);
+            }
+            catch (Exception e)
+            {
+                _log.LogError(e.Message);
+            }
+        }
+        
         public void CompressToFastdl(string filename)
         {
             var _mapbsp = Path.Combine(_config.GetValue<string>("ExtractPath:0"), filename);
